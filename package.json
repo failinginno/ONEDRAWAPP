@@ -1,0 +1,50 @@
+{
+  "name": "onedraw",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -b --pretty false",
+    "test": "vitest run",
+    "keeper:testnet": "node automation/keeper.mjs",
+    "keeper:mainnet": "node automation/mainnet-keeper.mjs",
+    "admin:pools": "node automation/pool-admin.mjs",
+    "video:studio": "remotion studio video/index.ts",
+    "video:render": "remotion render video/index.ts OnedrawFilm public/videos/onedraw-intro.mp4",
+    "video:poster": "remotion still video/index.ts OnedrawPoster video/preview/onedraw-film-cover.png && sharp -i video/preview/onedraw-film-cover.png -o public/images --format webp --quality 90 --"
+    ,"video:render:v2": "remotion render video/index.ts OnedrawFilmV2 public/videos/onedraw-intro-v2.mp4"
+    ,"video:poster:v2": "remotion still video/index.ts OnedrawPosterV2 video/preview/onedraw-film-cover-v2.png && node video/convert-poster-v2.mjs"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.103.2",
+    "lucide-react": "^0.460.0",
+    "motion": "^12.0.6",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.30.6",
+    "viem": "^2.56.8",
+    "wagmi": "^3.7.7"
+  },
+  "devDependencies": {
+    "@remotion/bundler": "^4.0.527",
+    "@remotion/cli": "^4.0.527",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "jsdom": "^25.0.1",
+    "postcss": "^8.4.49",
+    "remotion": "^4.0.527",
+    "sharp": "^0.35.4",
+    "sharp-cli": "^6.1.0",
+    "tailwindcss": "^3.4.15",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.11",
+    "vitest": "^2.1.9"
+  }
+}

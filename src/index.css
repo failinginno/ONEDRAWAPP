@@ -1,0 +1,437 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===============================================================
+   Base
+   =============================================================== */
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  font-family: 'Inter', 'Geist', 'Suisse Intl', 'Neue Montreal', 'Helvetica Neue', system-ui,
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: #000000;
+  color: #fff;
+}
+
+::selection {
+  background-color: rgb(61 129 227 / 0.3);
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Restrained, premium scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  border: 3px solid #050505;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ===============================================================
+   Dark glass
+   =============================================================== */
+.od-glass {
+  background: rgba(255, 255, 255, 0.012);
+  background-blend-mode: luminosity;
+  backdrop-filter: blur(6px);
+  border: none;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.09);
+  position: relative;
+  overflow: hidden;
+}
+
+.od-glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.2px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.34) 0%,
+    rgba(255, 255, 255, 0.12) 20%,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0) 60%,
+    rgba(255, 255, 255, 0.12) 80%,
+    rgba(255, 255, 255, 0.34) 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Solid dark panel — used for large product surfaces */
+.od-panel {
+  background: linear-gradient(160deg, #0b0d12 0%, #08090b 55%, #05060a 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+/* ===============================================================
+   Shiny gradient headline
+   =============================================================== */
+@keyframes od-shiny {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.animate-shiny {
+  animation: od-shiny 7s linear infinite;
+}
+
+/* ===============================================================
+   Ambient
+   =============================================================== */
+@keyframes od-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -14px, 0);
+  }
+}
+
+.animate-drift {
+  animation: od-drift 14s ease-in-out infinite;
+}
+
+@keyframes od-sweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(220%);
+  }
+}
+
+.animate-sweep {
+  animation: od-sweep 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes od-pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(0, 210, 255, 0.55);
+  }
+  50% {
+    opacity: 0.65;
+    box-shadow: 0 0 0 5px rgba(0, 210, 255, 0);
+  }
+}
+
+.animate-pulse-dot {
+  animation: od-pulse-dot 2.4s ease-in-out infinite;
+}
+
+/* ===============================================================
+   Utilities
+   =============================================================== */
+.hairline-t {
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.hairline-b {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-shiny,
+  .animate-drift,
+  .animate-sweep,
+  .animate-pulse-dot,
+  .od-ring-halo,
+  .od-beam,
+  .od-core,
+  .od-core-halo,
+  .od-logo-beam,
+  .od-logo-core,
+  .od-logo-ring,
+  .od-logo-word,
+  .od-ring-bloom,
+  .od-logo-bloom {
+    animation: none;
+  }
+  .od-beam {
+    opacity: 0.55;
+    transform: scaleX(1);
+  }
+  /* settled full logo for the hero mark */
+  .od-logo-beam,
+  .od-logo-core,
+  .od-logo-word {
+    opacity: 1;
+    transform: none;
+  }
+  .od-logo-ring {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+  .od-logo-bloom {
+    opacity: 0.35;
+  }
+  .od-ring-bloom {
+    opacity: 0.16;
+  }
+}
+
+/* ===============================================================
+   Background brand-ring field (replaces the old wave video).
+   The glow breathes, the beam sweeps in from the left, the core
+   point pulses — all opacity/transform only, cheap to composite.
+   =============================================================== */
+.od-ring-halo {
+  animation: od-ring-breathe 18s ease-in-out infinite;
+}
+
+@keyframes od-ring-breathe {
+  0%,
+  100% {
+    opacity: 0.13;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.od-beam {
+  transform-box: fill-box;
+  transform-origin: left center;
+  animation: od-beam-sweep 11s ease-in-out infinite;
+}
+
+@keyframes od-beam-sweep {
+  0% {
+    opacity: 0;
+    transform: scaleX(0.45);
+  }
+  8% {
+    opacity: 1;
+  }
+  36% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+  62%,
+  100% {
+    opacity: 0;
+    transform: scaleX(1);
+  }
+}
+
+.od-core {
+  animation: od-core-pulse 4.5s ease-in-out infinite;
+}
+
+@keyframes od-core-pulse {
+  0%,
+  100% {
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.od-core-halo {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: od-core-halo-pulse 4.5s ease-in-out infinite;
+}
+
+@keyframes od-core-halo-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(0.92);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.12);
+  }
+}
+
+/* ===============================================================
+   Hero living-mark animation (replaces the particle field).
+   One 12s beat: beam -> core ignition -> ring draw -> wordmark,
+   hold, fade, loop. Composition mirrors the official logo exactly.
+   =============================================================== */
+.od-logo-beam {
+  transform-box: fill-box;
+  transform-origin: left center;
+  animation: od-logo-beam 12s ease-in-out infinite;
+}
+
+@keyframes od-logo-beam {
+  0% {
+    opacity: 0;
+    transform: scaleX(0.02);
+  }
+  6% {
+    opacity: 1;
+  }
+  10% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+  78% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+  88%,
+  100% {
+    opacity: 0;
+    transform: scaleX(1);
+  }
+}
+
+.od-logo-core {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: od-logo-core 12s ease-in-out infinite;
+}
+
+@keyframes od-logo-core {
+  0%,
+  8% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  13% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  74% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  86%,
+  100% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
+
+.od-logo-ring {
+  animation: od-logo-ring 12s ease-in-out infinite;
+}
+
+@keyframes od-logo-ring {
+  0%,
+  10% {
+    opacity: 1;
+    stroke-dashoffset: 815;
+  }
+  24% {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+  74% {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+  86%,
+  100% {
+    opacity: 0;
+    stroke-dashoffset: 0;
+  }
+}
+
+.od-logo-word {
+  transform-box: fill-box;
+  transform-origin: left center;
+  animation: od-logo-word 12s ease-in-out infinite;
+}
+
+@keyframes od-logo-word {
+  0%,
+  20% {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+  30% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  74% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  86%,
+  100% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+}
+
+/* bloom layers — decoupled from the ring-draw animation so the soft
+   glow keeps a fixed, dim opacity (no dirty bands above/below the ring) */
+.od-logo-bloom {
+  animation: od-logo-bloom 12s ease-in-out infinite;
+}
+
+@keyframes od-logo-bloom {
+  0%,
+  10% {
+    opacity: 0;
+  }
+  24%,
+  74% {
+    opacity: 0.35;
+  }
+  86%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.od-ring-bloom {
+  animation: od-ring-bloom-breathe 18s ease-in-out infinite;
+}
+
+@keyframes od-ring-bloom-breathe {
+  0%,
+  100% {
+    opacity: 0.045;
+  }
+  50% {
+    opacity: 0.11;
+  }
+}
